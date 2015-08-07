@@ -1,3 +1,11 @@
+var mongoose = require('mongoose');
+require('./models/Posts');
+require('./models/Comments');
+require('./models/Users');
+require('./config/passport');
+mongoose.connect('mongodb://localhost/news');
+var passport = require('passport');
+
 var express = require('express');
 var path = require('path');
 var favicon = require('serve-favicon');
@@ -10,6 +18,7 @@ var users = require('./routes/users');
 
 var app = express();
 
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
@@ -21,6 +30,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(passport.initialize());
 
 app.use('/', routes);
 app.use('/users', users);
